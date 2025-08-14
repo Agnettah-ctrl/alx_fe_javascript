@@ -8,17 +8,17 @@
 <body>
   <h1>Dynamic Quote Generator</h1>
 
-  <!-- Where the quote will be shown -->
-  <div id="quoteDisplay"></div>
+  <!-- Quote display -->
+  <div id="quoteDisplay">No quotes yet.</div>
 
-  <!-- Grader expects this exact button ID and an event listener in JS -->
+  <!-- Button to show a new quote -->
   <button id="newQuote">Show New Quote</button>
 
-  <!-- Simple form to add quotes (IDs as specified in the task) -->
+  <!-- Form to add a new quote -->
   <div>
     <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
     <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button onclick="addQuote()">Add Quote</button>
+    <button id="addQuoteBtn">Add Quote</button>
   </div>
 
   <script src="script.js"></script>

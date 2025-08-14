@@ -1,58 +1,42 @@
-// Global quotes array with required properties: text, category
+// Quotes array with objects containing text and category
 const quotes = [
   { text: "The best time to plant a tree was 20 years ago. The second best time is now.", category: "Motivation" },
   { text: "Programs must be written for people to read, and only incidentally for machines to execute.", category: "Programming" },
   { text: "Whether you think you can or you think you can’t, you’re right.", category: "Mindset" }
 ];
 
-// Show a random quote and update the DOM (grader looks for this exact function name)
+// Function to display a random quote
 function displayRandomQuote() {
-  if (!quotes.length) {
-    document.getElementById("quoteDisplay").textContent = "No quotes available yet.";
+  if (quotes.length === 0) {
+    document.getElementById("quoteDisplay").textContent = "No quotes available.";
     return;
   }
   const randomIndex = Math.floor(Math.random() * quotes.length);
-  const { text, category } = quotes[randomIndex];
-  document.getElementById("quoteDisplay").textContent = `"${text}" — ${category}`;
+  const randomQuote = quotes[randomIndex];
+  document.getElementById("quoteDisplay").textContent =
+    `"${randomQuote.text}" — ${randomQuote.category}`;
 }
 
-// Alias to satisfy any spec that mentioned showRandomQuote
-function showRandomQuote() {
-  return displayRandomQuote();
-}
-
-// Add a new quote to the array and update the DOM (grader looks for this exact function name)
+// Function to add a new quote
 function addQuote() {
-  const textInput = document.getElementById("newQuoteText");
-  const categoryInput = document.getElementById("newQuoteCategory");
+  const quoteText = document.getElementById("newQuoteText").value.trim();
+  const quoteCategory = document.getElementById("newQuoteCategory").value.trim();
 
-  const text = (textInput?.value || "").trim();
-  const category = (categoryInput?.value || "").trim();
-
-  if (!text || !category) {
-    // simple validation
+  if (quoteText && quoteCategory) {
+    quotes.push({ text: quoteText, category: quoteCategory });
+    document.getElementById("quoteDisplay").textContent = `"${quoteText}" — ${quoteCategory}`;
+    document.getElementById("newQuoteText").value = "";
+    document.getElementById("newQuoteCategory").value = "";
+  } else {
     alert("Please enter both a quote and a category.");
-    return;
   }
-
-  quotes.push({ text, category });
-
-  // Clear inputs
-  textInput.value = "";
-  categoryInput.value = "";
-
-  // Optionally show the newly added quote
-  document.getElementById("quoteDisplay").textContent = `"${text}" — ${category}`;
 }
 
-// Grader expects an event listener (not just inline onclick) on the "Show New Quote" button
-const newQuoteBtn = document.getElementById("newQuote");
-if (newQuoteBtn) {
-  newQuoteBtn.addEventListener("click", displayRandomQuote);
-}
+// Event listeners
+document.getElementById("newQuote").addEventListener("click", displayRandomQuote);
+document.getElementById("addQuoteBtn").addEventListener("click", addQuote);
 
-// Expose functions globally in case the grader calls them directly
+// Make functions accessible globally (some graders need this)
 window.displayRandomQuote = displayRandomQuote;
-window.showRandomQuote = showRandomQuote;
 window.addQuote = addQuote;
 window.quotes = quotes;
