@@ -11,8 +11,6 @@ let lastSelectedCategory = localStorage.getItem("selectedCategory") || "all";
 // ===== Populate Categories =====
 function populateCategories() {
   const categoryFilter = document.getElementById("categoryFilter");
-
-  // Clear existing options except "All"
   categoryFilter.innerHTML = '<option value="all">All Categories</option>';
 
   const categories = [...new Set(quotes.map(q => q.category))];
@@ -104,10 +102,9 @@ function importQuotes(event) {
   reader.readAsText(file);
 }
 
-// ===== Sync Quotes (GET + POST) =====
-async function syncQuotes() {
+// ===== Fetch Quotes From Server (GET) =====
+async function fetchQuotesFromServer() {
   try {
-    // --- GET request: fetch server quotes
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const serverData = await response.json();
 
@@ -122,14 +119,9 @@ async function syncQuotes() {
 
     populateCategories();
     filterQuotes();
-    console.log("Quotes synced with server.");
-
-    // --- POST request: send all local quotes back to server
-    for (const q of quotes) {
-      await postQuoteToServer(q);
-    }
+    console.log("Fetched quotes from server.");
   } catch (error) {
-    console.error("Failed to sync with server", error);
+    console.error("Failed to fetch from server", error);
   }
 }
 
@@ -151,11 +143,19 @@ async function postQuoteToServer(quote) {
   }
 }
 
+// ===== Sync Quotes (GET + POST all) =====
+async function syncQuotes() {
+  await fetchQuotesFromServer();
+
+  for (const q of quotes) {
+    await postQuoteToServer(q);
+  }
+  console.log("Quotes synced with server.");
+}
+
 // ===== On Load =====
 window.onload = function() {
   populateCategories();
   filterQuotes();
-
-  // Auto sync with server on load
-  syncQuotes();
+  syncQuotes(); // Auto sync
 };
