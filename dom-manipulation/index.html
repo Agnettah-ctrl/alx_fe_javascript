@@ -1,66 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote Storage App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f4f4f4;
-        }
-        #quote-display {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.1);
-        }
-        input, button {
-            padding: 10px;
-            margin: 5px 0;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #45a049;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Quote Generator</title>
 </head>
 <body>
+  <h1>Dynamic Quote Generator</h1>
 
-    <h1>My Favorite Quotes</h1>
+  <!-- Display for random quotes -->
+  <div id="quoteDisplay"></div>
+  <button id="newQuote">Show New Quote</button>
 
-    <!-- Display Area -->
-    <div id="quote-display"></div>
+  <!-- Form to add new quotes -->
+  <div>
+    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
+    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
+    <button onclick="addQuote()">Add Quote</button>
+  </div>
 
-    <!-- Show Random Quote Button -->
-    <button id="new-quote-btn">Show New Quote</button>
+  <!-- Export + Import functionality -->
+  <div>
+    <button id="exportQuotes">Export Quotes</button>
+    <input type="file" id="importFile" />
+  </div>
 
-    <h2>Add a New Quote</h2>
-
-    <!-- Input for Quote Text -->
-    <input type="text" id="quote-text" placeholder="Enter quote text">
-
-    <!-- Input for Quote Category -->
-    <input type="text" id="quote-category" placeholder="Enter quote category">
-
-    <!-- Add Quote Button -->
-    <button id="add-quote-btn">Add Quote</button>
-
-    <!-- Export Quotes Button (Grader requirement) -->
-    <button id="export-quotes-btn">Export Quotes</button>
-
-    <!-- Link to JS -->
-    <script src="script.js"></script>
-
+  <script src="script.js"></script>
 </body>
 </html>
