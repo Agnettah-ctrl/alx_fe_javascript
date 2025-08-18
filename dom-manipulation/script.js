@@ -3,6 +3,7 @@ let quotes = [
   { text: "Life is what happens when you’re busy making other plans.", category: "Life" }
 ];
 
+// Show random quote
 function showRandomQuote() {
   const display = document.getElementById("quoteDisplay");
   const randomIndex = Math.floor(Math.random() * quotes.length);
@@ -11,6 +12,7 @@ function showRandomQuote() {
 
 document.getElementById("newQuote").addEventListener("click", showRandomQuote);
 
+// Add new quote
 function addQuote() {
   const text = document.getElementById("newQuoteText").value;
   const category = document.getElementById("newQuoteCategory").value;
@@ -25,7 +27,7 @@ function addQuote() {
   }
 }
 
-// ✅ Export quotes as JSON
+// Export quotes as JSON file
 document.getElementById("exportQuotes").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(quotes, null, 2)], { type: "application/json" });
   const url = URL.createObjectURL(blob);
@@ -39,14 +41,13 @@ document.getElementById("exportQuotes").addEventListener("click", () => {
   URL.revokeObjectURL(url);
 });
 
-// ✅ Import quotes using FileReader
+// Import quotes from JSON file
 document.getElementById("importFile").addEventListener("change", (event) => {
   const file = event.target.files[0];
   if (!file) return;
 
   const reader = new FileReader();
 
-  // grader check: onload
   reader.onload = function(e) {
     try {
       const importedQuotes = JSON.parse(e.target.result);
@@ -57,6 +58,5 @@ document.getElementById("importFile").addEventListener("change", (event) => {
     }
   };
 
-  // grader check: readAsText
   reader.readAsText(file);
 });
