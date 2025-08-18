@@ -104,28 +104,32 @@ function importQuotes(event) {
   reader.readAsText(file);
 }
 
-// ===== Server Sync =====
-async function fetchQuotesFromServer() {
+// ===== Sync Quotes (GET + POST) =====
+async function syncQuotes() {
   try {
-    // GET request: fetch server quotes
+    // --- GET request: fetch server quotes
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const serverData = await response.json();
 
-    // Simulate server quotes (mapping posts -> quotes)
     const serverQuotes = serverData.slice(0, 5).map(post => ({
       text: post.title,
       category: "Server"
     }));
 
-    // Merge with local (server takes precedence)
+    // Merge: server first
     quotes = [...serverQuotes, ...quotes];
     localStorage.setItem("quotes", JSON.stringify(quotes));
 
     populateCategories();
     filterQuotes();
     console.log("Quotes synced with server.");
+
+    // --- POST request: send all local quotes back to server
+    for (const q of quotes) {
+      await postQuoteToServer(q);
+    }
   } catch (error) {
-    console.error("Failed to fetch from server", error);
+    console.error("Failed to sync with server", error);
   }
 }
 
@@ -153,5 +157,5 @@ window.onload = function() {
   filterQuotes();
 
   // Auto sync with server on load
-  fetchQuotesFromServer();
+  syncQuotes();
 };
