@@ -2,25 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Quote Manager</title>
+  <title>Dynamic Quote Generator</title>
 </head>
 <body>
-  <h1>Random Quote Generator</h1>
+  <h1>Dynamic Quote Generator</h1>
 
-  <!-- Quote Display -->
-  <div id="quoteDisplay"></div>
+  <!-- Display Random Quote -->
+  <div id="quoteDisplay">Your quote will appear here</div>
   <button id="newQuote">New Quote</button>
 
-  <!-- Add Quote -->
-  <h2>Add a Quote</h2>
+  <!-- Category Filter -->
+  <label for="categoryFilter">Filter by Category:</label>
+  <select id="categoryFilter" onchange="filterQuotes()">
+    <option value="all">All Categories</option>
+  </select>
+
+  <!-- Add Quote Form -->
+  <h3>Add a New Quote</h3>
   <input type="text" id="newQuoteText" placeholder="Enter quote">
   <input type="text" id="newQuoteCategory" placeholder="Enter category">
   <button onclick="addQuote()">Add Quote</button>
 
-  <!-- Export / Import -->
-  <h2>Manage Quotes</h2>
+  <!-- Import/Export -->
   <button id="exportQuotes">Export Quotes</button>
-  <input type="file" id="importFile" accept=".json">
+  <input type="file" id="importFile">
+
+  <!-- Sync Notification -->
+  <div id="syncStatus"></div>
 
   <script src="script.js"></script>
 </body>
