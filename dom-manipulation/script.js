@@ -55,10 +55,15 @@ function addQuote() {
   const category = document.getElementById("categoryInput").value.trim();
 
   if (text && category) {
-    quotes.push({ text, category });
+    const newQuote = { text, category };
+    quotes.push(newQuote);
     localStorage.setItem("quotes", JSON.stringify(quotes));
     populateCategories();
     filterQuotes();
+
+    // Send to server as well
+    postQuoteToServer(newQuote);
+
     document.getElementById("quoteInput").value = "";
     document.getElementById("categoryInput").value = "";
   }
@@ -99,9 +104,10 @@ function importQuotes(event) {
   reader.readAsText(file);
 }
 
-// ===== Server Sync (Grader expects fetchQuotesFromServer) =====
+// ===== Server Sync =====
 async function fetchQuotesFromServer() {
   try {
+    // GET request: fetch server quotes
     const response = await fetch("https://jsonplaceholder.typicode.com/posts");
     const serverData = await response.json();
 
@@ -120,6 +126,24 @@ async function fetchQuotesFromServer() {
     console.log("Quotes synced with server.");
   } catch (error) {
     console.error("Failed to fetch from server", error);
+  }
+}
+
+// ===== POST new quote to server =====
+async function postQuoteToServer(quote) {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(quote)
+    });
+
+    const data = await response.json();
+    console.log("Quote posted to server:", data);
+  } catch (error) {
+    console.error("Failed to post quote to server", error);
   }
 }
 
