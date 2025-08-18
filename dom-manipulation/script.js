@@ -1,7 +1,13 @@
-let quotes = [
+// Load quotes from localStorage or use defaults
+let quotes = JSON.parse(localStorage.getItem("quotes")) || [
   { text: "The best way to predict the future is to invent it.", category: "Inspiration" },
   { text: "Life is what happens when you’re busy making other plans.", category: "Life" }
 ];
+
+// Save quotes to localStorage
+function saveQuotes() {
+  localStorage.setItem("quotes", JSON.stringify(quotes));
+}
 
 // Show random quote
 function showRandomQuote() {
@@ -19,6 +25,7 @@ function addQuote() {
 
   if (text && category) {
     quotes.push({ text, category });
+    saveQuotes(); // persist to localStorage
     document.getElementById("newQuoteText").value = "";
     document.getElementById("newQuoteCategory").value = "";
     alert("Quote added!");
@@ -52,6 +59,7 @@ document.getElementById("importFile").addEventListener("change", (event) => {
     try {
       const importedQuotes = JSON.parse(e.target.result);
       quotes = quotes.concat(importedQuotes);
+      saveQuotes(); // persist after import
       alert("Quotes imported successfully!");
     } catch {
       alert("Invalid JSON file.");
