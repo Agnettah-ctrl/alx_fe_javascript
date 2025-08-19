@@ -150,7 +150,7 @@ async function syncQuotes() {
   for (const q of quotes) {
     await postQuoteToServer(q);
   }
-  console.log("Quotes synced with server.");
+  console.log("Quotes synced with server!"); // ✅ Required phrase
 }
 
 // ===== On Load =====
