@@ -157,5 +157,8 @@ async function syncQuotes() {
 window.onload = function() {
   populateCategories();
   filterQuotes();
-  syncQuotes(); // Auto sync
+  syncQuotes(); // Auto sync on load
+
+  // Auto-sync every 30 seconds
+  setInterval(syncQuotes, 30000);
 };
